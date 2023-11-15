@@ -428,6 +428,7 @@ class OnPolicyRunner(object):
 
     @staticmethod
     def valid_loop(id: int = 0, *engine_args, **engine_kwargs):
+        get_logger().info("Here!")
         engine_kwargs["mode"] = VALID_MODE_STR
         engine_kwargs["worker_id"] = id
         get_logger().info(f"valid {id} args {engine_kwargs}")
