@@ -17,6 +17,7 @@ from allenact.embodiedai.models.visual_nav_models import (
     VisualNavActorCritic,
     FusionType,
 )
+from allenact.utils.system import find_free_port, get_logger
 
 
 class CatObservations(nn.Module):
@@ -222,6 +223,7 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
         combiner_hidden_out_dims: Tuple[int, int] = (128, 32),
         **kwargs,
     ):
+        get_logger().info("ResnetTensorNavActorCritic initiated")
         super().__init__(
             action_space=action_space,
             observation_space=observation_space,
@@ -259,7 +261,7 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
                 resnet_compressor_hidden_out_dims,
                 combiner_hidden_out_dims,
             )
-
+        get_logger().info("goal_visual encoder created!")
         self.create_state_encoders(
             obs_embed_size=self.goal_visual_encoder.output_dims,
             num_rnn_layers=num_rnn_layers,
@@ -268,14 +270,14 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
             add_prev_action_null_token=add_prev_action_null_token,
             prev_action_embed_size=action_embed_size,
         )
-
+        get_logger().info("created state encoder!")
         self.create_actorcritic_head()
-
+        get_logger().info("created actor critic head!")
         self.create_aux_models(
             obs_embed_size=self.goal_visual_encoder.output_dims,
             action_embed_size=action_embed_size,
         )
-
+        get_logger().info("created aux model!")
         self.train()
 
     @property
