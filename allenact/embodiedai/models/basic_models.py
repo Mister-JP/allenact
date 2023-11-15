@@ -269,6 +269,7 @@ class RNNStateEncoder(nn.Module):
         trainable_masked_hidden_state : If `True` the initial hidden state (used at the start of a Task)
             is trainable (as opposed to being a vector of zeros).
         """
+        get_logger().info("RNNStateEncoder initiated")
 
         super().__init__()
         self._num_recurrent_layers = num_layers
@@ -277,13 +278,14 @@ class RNNStateEncoder(nn.Module):
         self.rnn = getattr(torch.nn, rnn_type)(
             input_size=input_size, hidden_size=hidden_size, num_layers=num_layers
         )
-
+        get_logger().info("RNNStateEncoder rnn attributes created")
         self.trainable_masked_hidden_state = trainable_masked_hidden_state
+        get_logger().info("trainable masked hidden state")
         if trainable_masked_hidden_state:
             self.init_hidden_state = nn.Parameter(
                 0.1 * torch.randn((num_layers, 1, hidden_size)), requires_grad=True
             )
-
+        get_logger().info("layer init called.")
         self.layer_init()
 
     def layer_init(self):
