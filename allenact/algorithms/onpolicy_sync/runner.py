@@ -523,7 +523,7 @@ class OnPolicyRunner(object):
                 self.config.machine_params(self.mode)
             ).sensor_preprocessor_graph
         ).state_dict()
-        
+        get_logger().info("Model starts with same initialization")
 
         distributed_port = 0 if num_workers == 1 else self.get_port()
 
@@ -573,7 +573,9 @@ class OnPolicyRunner(object):
                 target=self.train_loop,
                 kwargs=training_kwargs,
             )
+            get_logger().info("Parameters assigned to process")
             try:
+                get_logger().info("train.start()")
                 train.start()
             except (ValueError, OSError, ConnectionRefusedError, EOFError) as e:
                 # If the `initial_model_state_dict` is too large we sometimes
