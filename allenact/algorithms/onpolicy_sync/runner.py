@@ -512,7 +512,7 @@ class OnPolicyRunner(object):
             self.save_project_state()
 
         devices = self.worker_devices(TRAIN_MODE_STR)
-        get_logger().info("Devices: {devices}")
+        get_logger().info(f"Devices: {devices}")
         num_workers = len(devices)
 
         # Be extra careful to ensure that all models start
