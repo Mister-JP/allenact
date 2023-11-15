@@ -290,11 +290,13 @@ class RNNStateEncoder(nn.Module):
 
     def layer_init(self):
         """Initialize the RNN parameters in the model."""
+        get_logger().info("Starting for loop")
         for name, param in self.rnn.named_parameters():
             if "weight" in name:
                 nn.init.orthogonal_(param)
             elif "bias" in name:
                 nn.init.constant_(param, 0)
+        get_logger().info("For each name and param in named_paramter initiated bias and weight with param")
 
     @property
     def num_recurrent_layers(self) -> int:
