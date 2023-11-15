@@ -116,9 +116,9 @@ class MachineParams(object):
             if d != torch.device("cpu"):
                 try:
                     torch.cuda.get_device_capability(d)  # type: ignore
-                except Exception:
+                except Exception as e:
                     raise RuntimeError(
-                        f"It appears the cuda device {d} is not available on your system."
+                        f"It appears the cuda device {d} is not available on your system. Error: {e}"
                     )
         # devices = tuple(torch.device("cpu") for _ in devices)  # Set all devices to CPU
 
