@@ -109,16 +109,26 @@ class MachineParams(object):
             f" must equal the number of workers ({nworkers})"
         )
 
-        devices = tuple(
-            torch.device("cpu") if d == -1 else torch.device(d) for d in devices  # type: ignore
-        )
+        # devices = tuple(
+        #     torch.device("cpu") if d == -1 else torch.device(d) for d in devices  # type: ignore
+        # )
+        # for d in devices:
+        #     if d != torch.device("cpu"):
+        #         try:
+        #             torch.cuda.get_device_capability(d)  # type: ignore
+        #         except Exception:
+        #             raise RuntimeError(
+        #                 f"It appears the cuda device {d} is not available on your system."
+        #             )
+        devices = tuple(torch.device("cpu") for _ in devices)  # Set all devices to CPU
+
         for d in devices:
-            if d != torch.device("cpu"):
+            if "cuda" in d.type:
                 try:
-                    torch.cuda.get_device_capability(d)  # type: ignore
-                except Exception:
+                    torch.cuda.get_device_capability(d)
+                except Exception as e:
                     raise RuntimeError(
-                        f"It appears the cuda device {d} is not available on your system."
+                        f"It appears the CUDA device {d} is not available on your system. Error: {e}"
                     )
 
         return cast(Tuple[torch.device, ...], devices)
