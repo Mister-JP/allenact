@@ -96,6 +96,7 @@ class OnPolicyRunner(object):
         save_dir_fmt: SaveDirFormat = SaveDirFormat.FLAT,
         callbacks_paths: Optional[str] = None,
     ):
+        get_logger().info("Runner initiated!")
         self.config = config
         self.output_dir = output_dir
         self.loaded_config_src_files = loaded_config_src_files
@@ -146,6 +147,7 @@ class OnPolicyRunner(object):
         self.save_dir_fmt = save_dir_fmt
 
         self.callbacks_paths = callbacks_paths
+        get_logger().info("Everything initiated successfully.")
 
     @lazy_property
     def callbacks(self):
@@ -501,6 +503,7 @@ class OnPolicyRunner(object):
         valid_on_initial_weights: bool = False,
         try_restart_after_task_error: bool = False,
     ):
+        get_logger().info("Starting train")
         self._initialize_start_train_or_start_test()
 
         self._collect_valid_results = collect_valid_results

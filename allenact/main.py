@@ -456,6 +456,7 @@ def main():
     cfg, srcs = load_config(args)
 
     if not args.eval:
+        get_logger().info("In training")
         OnPolicyRunner(
             config=cfg,
             output_dir=args.output_dir,
