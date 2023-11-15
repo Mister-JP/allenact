@@ -295,6 +295,7 @@ class RNNStateEncoder(nn.Module):
             get_logger().info(f"In for loop for {name}, and {param}")
             if "weight" in name:
                 nn.init.orthogonal_(param)
+                get_logger().info(f"In for loop for weight")
             elif "bias" in name:
                 nn.init.constant_(param, 0)
         get_logger().info("For each name and param in named_paramter initiated bias and weight with param")
