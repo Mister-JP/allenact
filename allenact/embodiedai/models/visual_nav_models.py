@@ -85,7 +85,9 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
             rnn_input_size += prev_action_embed_size
 
         state_encoders = OrderedDict()  # perserve insertion order in py3.6
+        get_logger().info("embeddings size fixed")
         if self.multiple_beliefs:  # multiple belief model
+            get_logger().info("If multiple beliefs")
             for aux_uuid in self.auxiliary_uuids:
                 state_encoders[aux_uuid] = RNNStateEncoder(
                     rnn_input_size,
@@ -95,13 +97,16 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                     trainable_masked_hidden_state=trainable_masked_hidden_state,
                 )
             # create fusion model
+            get_logger().info("RNNStateEncoder called for each aux_uuid")
             self.fusion_model = self.beliefs_fusion(
                 hidden_size=self._hidden_size,
                 obs_embed_size=obs_embed_size,
                 num_tasks=len(self.auxiliary_uuids),
             )
-
+            get_logger().info("belief fusion used to create fusion model")
+        
         else:  # single belief model
+            get_logger().info("If single beliefs")
             state_encoders["single_belief"] = RNNStateEncoder(
                 rnn_input_size,
                 self._hidden_size,
@@ -109,10 +114,12 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 rnn_type=rnn_type,
                 trainable_masked_hidden_state=trainable_masked_hidden_state,
             )
+            get_logger().info("state encoder for single belief created")
 
         self.state_encoders = nn.ModuleDict(state_encoders)
-
+        get_logger().info("created state encoder from ModuleDict")
         self.belief_names = list(self.state_encoders.keys())
+        get_logger().info("belief names in a list")
 
         get_logger().info(
             "there are {} belief models: {}".format(
