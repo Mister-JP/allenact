@@ -292,6 +292,7 @@ class RNNStateEncoder(nn.Module):
         """Initialize the RNN parameters in the model."""
         get_logger().info(f"Starting for loop for {len(self.rnn.named_parameters())}")
         for name, param in self.rnn.named_parameters():
+            get_logger().info(f"In for loop for {name}, and {param}")
             if "weight" in name:
                 nn.init.orthogonal_(param)
             elif "bias" in name:
