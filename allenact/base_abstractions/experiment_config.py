@@ -118,7 +118,7 @@ class MachineParams(object):
                     torch.cuda.get_device_capability(d)  # type: ignore
                 except Exception as e:
                     raise RuntimeError(
-                        f"It appears the cuda device {d} is not available on your system. Error: {e}"
+                        f"It appears the cuda device {d} is not available on your system. Error: {e}. CUDA enabled: {torch.cuda.is_available()}"
                     )
         # devices = tuple(torch.device("cpu") for _ in devices)  # Set all devices to CPU
 
