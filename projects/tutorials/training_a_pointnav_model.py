@@ -124,6 +124,7 @@ from allenact_plugins.robothor_plugin.robothor_task_samplers import (
     PointNavDatasetTaskSampler,
 )
 from allenact_plugins.robothor_plugin.robothor_tasks import PointNavTask
+from allenact.utils.system import find_free_port, get_logger
 
 # %%
 """Next we define a new experiment config class:"""
