@@ -190,11 +190,11 @@ class RoboThorEnvironment:
         try:
             return self.controller.step(
                 action="GetShortestPathToPoint",
-                x=target['x'],
-                y=target['y'],
-                z=target['z'],
+                # x=target['x'],
+                # y=target['y'],
+                # z=target['z'],
                 position=position,
-                # target=target,
+                target=target,
                 allowedError=allowedError,
             ).metadata["actionReturn"]["corners"]
         except ValueError:
