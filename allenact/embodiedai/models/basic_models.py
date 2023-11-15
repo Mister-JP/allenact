@@ -294,6 +294,7 @@ class RNNStateEncoder(nn.Module):
         for name, param in self.rnn.named_parameters():
             get_logger().info(f"In for loop for {name}, and {param}")
             if "weight" in name:
+                get_logger().info(f"Before init orthogonal")
                 nn.init.orthogonal_(param)
                 get_logger().info(f"In for loop for weight")
             elif "bias" in name:
