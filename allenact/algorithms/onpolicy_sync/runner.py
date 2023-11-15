@@ -503,7 +503,7 @@ class OnPolicyRunner(object):
         valid_on_initial_weights: bool = False,
         try_restart_after_task_error: bool = False,
     ):
-        get_logger().info("Starting train")
+        get_logger().info("Starting training")
         self._initialize_start_train_or_start_test()
 
         self._collect_valid_results = collect_valid_results
@@ -512,6 +512,7 @@ class OnPolicyRunner(object):
             self.save_project_state()
 
         devices = self.worker_devices(TRAIN_MODE_STR)
+        get_logger().info("Devices: {devices}")
         num_workers = len(devices)
 
         # Be extra careful to ensure that all models start
@@ -522,6 +523,7 @@ class OnPolicyRunner(object):
                 self.config.machine_params(self.mode)
             ).sensor_preprocessor_graph
         ).state_dict()
+        
 
         distributed_port = 0 if num_workers == 1 else self.get_port()
 
