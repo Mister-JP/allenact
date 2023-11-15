@@ -518,6 +518,7 @@ class OnPolicyRunner(object):
         # Be extra careful to ensure that all models start
         # with the same initializations.
         set_seed(self.seed)
+        get_logger().info("set_Seed executed")
         initial_model_state_dict = self.config.create_model(
             sensor_preprocessor_graph=MachineParams.instance_from(
                 self.config.machine_params(self.mode)
