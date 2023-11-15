@@ -75,6 +75,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         add_prev_action_null_token: bool,
         trainable_masked_hidden_state=False,
     ):
+        get_logger().info("create_state_encoder called from parent class!")
         rnn_input_size = obs_embed_size
         self.prev_action_embedder = FeatureEmbedding(
             input_size=int(add_prev_action_null_token) + self.action_space.n,
