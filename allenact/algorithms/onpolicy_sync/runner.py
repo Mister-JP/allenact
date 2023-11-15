@@ -96,7 +96,7 @@ class OnPolicyRunner(object):
         save_dir_fmt: SaveDirFormat = SaveDirFormat.FLAT,
         callbacks_paths: Optional[str] = None,
     ):
-        get_logger().info("Runner initiated!")
+        get_logger().info(f"Runner initiated! with config: {config}")
         self.config = config
         self.output_dir = output_dir
         self.loaded_config_src_files = loaded_config_src_files
