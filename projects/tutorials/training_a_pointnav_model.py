@@ -193,9 +193,9 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     ADVANCE_SCENE_ROLLOUT_PERIOD: Optional[int] = None
     NUM_PROCESSES = 40 #Increase to ~60
-    TRAINING_GPUS: Sequence[int] = [5]
-    VALIDATION_GPUS: Sequence[int] = [5]
-    TESTING_GPUS: Sequence[int] = [5]
+    TRAINING_GPUS: Sequence[int] = [4]
+    VALIDATION_GPUS: Sequence[int] = [4]
+    TESTING_GPUS: Sequence[int] = [4]
 
     # %%
     """
