@@ -192,8 +192,8 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
 
     # %%
     ADVANCE_SCENE_ROLLOUT_PERIOD: Optional[int] = None
-    NUM_PROCESSES = 40 #Increase to ~60
-    TRAINING_GPUS: Sequence[int] = [4]
+    NUM_PROCESSES = 60 #Increase to ~60
+    TRAINING_GPUS: Sequence[int] = [4,5,6]
     VALIDATION_GPUS: Sequence[int] = [4]
     TESTING_GPUS: Sequence[int] = [4]
 
@@ -204,7 +204,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     """
 
     # %%
-    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")#change to train
+    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/train")#change to train
     VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")
 
     # %%
@@ -294,7 +294,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def tag(cls):
-        return "PointNavRobothorRGBPPO"
+        return "PointNavRobothorRGBPPO_semiFull"
 
     # %%
     """
@@ -309,12 +309,12 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def training_pipeline(cls, **kwargs):
-        ppo_steps = int(300000)
+        ppo_steps = int(5000000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 3
         num_steps = 30#Should check with inference with the pretrained model, what do they set for it?
-        save_interval = 100000 #Saves weight and run validation
+        save_interval = 1000000 #Saves weight and run validation
         log_interval = 10000
         gamma = 0.99
         use_gae = True
