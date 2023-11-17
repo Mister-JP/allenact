@@ -1133,7 +1133,7 @@ class OnPolicyTrainer(OnPolicyRLEngine):
         config: ExperimentConfig,
         results_queue: mp.Queue,
         checkpoints_queue: Optional[mp.Queue],
-        checkpoints_dir: str = "",
+        checkpoints_dir: str = "",#Dir to store checkpoints
         seed: Optional[int] = None,
         deterministic_cudnn: bool = False,
         mp_ctx: Optional[BaseContext] = None,

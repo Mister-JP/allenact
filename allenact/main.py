@@ -459,7 +459,7 @@ def main():
         get_logger().info("In training")
         OnPolicyRunner(
             config=cfg,
-            output_dir=args.output_dir,
+            output_dir=args.output_dir,#checkpoints will be saved
             save_dir_fmt=args.save_dir_fmt,
             loaded_config_src_files=srcs,
             seed=args.seed,

@@ -192,7 +192,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
 
     # %%
     ADVANCE_SCENE_ROLLOUT_PERIOD: Optional[int] = None
-    NUM_PROCESSES = 20
+    NUM_PROCESSES = 60 #Increase to ~60
     TRAINING_GPUS: Sequence[int] = [5]
     VALIDATION_GPUS: Sequence[int] = [5]
     TESTING_GPUS: Sequence[int] = [5]
@@ -204,7 +204,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     """
 
     # %%
-    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")
+    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")#change to train
     VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")
 
     # %%
@@ -223,7 +223,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
             use_resnet_normalization=True,
             uuid="rgb_lowres",
         ),
-        GPSCompassSensorRoboThor(),
+        GPSCompassSensorRoboThor(), #Remove thi sensor
     ]
 
     # %%
@@ -264,7 +264,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     OBSERVATIONS = [
         "rgb_resnet",
-        "target_coordinates_ind",
+        "target_coordinates_ind",#Remove?
     ]
 
     # %%
@@ -309,13 +309,13 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def training_pipeline(cls, **kwargs):
-        ppo_steps = int(250000000)
+        ppo_steps = int(300000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 3
-        num_steps = 30
-        save_interval = 5000000
-        log_interval = 1000
+        num_steps = 30#Should check with inference with the pretrained model, what do they set for it?
+        save_interval = 100000 #Saves weight and run validation
+        log_interval = 10000
         gamma = 0.99
         use_gae = True
         gae_lambda = 0.95
@@ -412,7 +412,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
         return ResnetTensorNavActorCritic(
             action_space=gym.spaces.Discrete(len(PointNavTask.class_action_names())),
             observation_space=kwargs["sensor_preprocessor_graph"].observation_spaces,
-            goal_sensor_uuid="target_coordinates_ind",
+            goal_sensor_uuid="target_coordinates_ind", #Remove
             rgb_resnet_preprocessor_uuid="rgb_resnet",
             hidden_size=512,
             goal_dims=32,

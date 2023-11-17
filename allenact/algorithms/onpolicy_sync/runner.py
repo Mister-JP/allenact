@@ -98,7 +98,7 @@ class OnPolicyRunner(object):
     ):
         get_logger().info(f"Runner initiated! with config: {config}")
         self.config = config
-        self.output_dir = output_dir
+        self.output_dir = output_dir#saves checkpoints
         self.loaded_config_src_files = loaded_config_src_files
         self.seed = seed if seed is not None else random.randint(0, 2**31 - 1)
         self.deterministic_cudnn = deterministic_cudnn
@@ -787,6 +787,7 @@ class OnPolicyRunner(object):
             return f"{self.config.tag()}_{self.extra_tag}"
         return self.config.tag()
 
+    #responsible for saving chackpoints in a particular place
     def checkpoint_dir(
         self, start_time_str: Optional[str] = None, create_if_none: bool = True
     ):
