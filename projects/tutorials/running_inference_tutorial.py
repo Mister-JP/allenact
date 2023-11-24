@@ -131,7 +131,7 @@ class PointNavRoboThorRGBPPOVizExperimentConfig(PointNavRoboThorRGBPPOExperiment
         "FloorPlan_Train1_1_5",
         "FloorPlan_Train1_1_6",
     ]
-    viz_video_ids = [["FloorPlan_Train1_1_3"], ["FloorPlan_Train1_1_4"]]
+    viz_video_ids = [["FloorPlan_Train1_1_6"], ["FloorPlan_Train1_1_4"]]
 
     viz: Optional[VizSuite] = None
 
@@ -190,12 +190,7 @@ running_inference_tutorial \
 ```
 
 ```bash
-PYTHONPATH=. python allenact/main.py \
-running_inference_tutorial \
--o pretrained_model_ckpts/robothor-pointnav-rgb-resnet/ \
--b projects/tutorials \
--c storage/robothor-pointnav-rgb-resnet-resnet/checkpoints/PointNavRobothorRGBPPO_semiFull/2023-11-17_10-30-55/exp_PointNavRobothorRGBPPO_semiFull__stage_00__steps_000005000400.pt
---eval
+PYTHONPATH=. python allenact/main.py running_inference_tutorial -o pretrained_model_ckpts/robothor-pointnav-rgb-resnet/ -b projects/tutorials -c storage/robothor-pointnav-rgb-resnet-resnet/checkpoints/PointNavRobothorRGBPPO_semiFull/2023-11-17_10-30-55/exp_PointNavRobothorRGBPPO_semiFull__stage_00__steps_000005000400.pt --eval
 ```
 
 generates different types of visualization and logs them in tensorboard. If everything is properly setup and
