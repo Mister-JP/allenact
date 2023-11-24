@@ -128,6 +128,7 @@ class PointNavRoboThorRGBPPOVizExperimentConfig(PointNavRoboThorRGBPPOExperiment
     viz_ep_ids = [
         "FloorPlan_Train1_1_3",
         "FloorPlan_Train1_1_4",
+        "FloorPlan_Train2_1_1",
         "FloorPlan_Train1_1_5",
         "FloorPlan_Train1_1_6",
     ]
