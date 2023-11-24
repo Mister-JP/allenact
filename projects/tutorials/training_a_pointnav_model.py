@@ -205,7 +205,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
 
     # %%
     TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/train")#change to train
-    VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")
+    VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/val")#changed for inference
 
     # %%
     """
