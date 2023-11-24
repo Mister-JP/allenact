@@ -481,6 +481,7 @@ def main():
             try_restart_after_task_error=args.enable_crash_recovery,
         )
     else:
+        get_logger().info("In testing")
         OnPolicyRunner(
             config=cfg,
             output_dir=args.output_dir,

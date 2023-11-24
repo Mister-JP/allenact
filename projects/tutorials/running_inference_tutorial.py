@@ -189,6 +189,15 @@ running_inference_tutorial \
 --eval
 ```
 
+```bash
+PYTHONPATH=. python allenact/main.py \
+running_inference_tutorial \
+-o pretrained_model_ckpts/robothor-pointnav-rgb-resnet/ \
+-b projects/tutorials \
+-c storage/robothor-pointnav-rgb-resnet-resnet/checkpoints/PointNavRobothorRGBPPO_semiFull/2023-11-17_10-30-55/exp_PointNavRobothorRGBPPO_semiFull__stage_00__steps_000005000400.pt
+--eval
+```
+
 generates different types of visualization and logs them in tensorboard. If everything is properly setup and
 tensorboard includes the `robothor-pointnav-rgb-resnet` folder, under the `IMAGES` tab, we should see something similar
 to

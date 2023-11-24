@@ -185,6 +185,7 @@ class OnPolicyRunner(object):
         valid_start_methods: Tuple[str, ...] = ("forkserver", "spawn", "fork"),
     ):
         if mp_ctx is None:
+            get_logger().info("mp_ctx is None")
             assert multiprocessing_start_method in valid_start_methods, (
                 f"multiprocessing_start_method must be one of {valid_start_methods}."
                 f" Got '{multiprocessing_start_method}'"
@@ -192,6 +193,7 @@ class OnPolicyRunner(object):
 
             mp_ctx = mp.get_context(multiprocessing_start_method)
         elif multiprocessing_start_method != mp_ctx.get_start_method():
+            get_logger().info("mp_ctx is NOT None")
             get_logger().warning(
                 f"ignoring multiprocessing_start_method '{multiprocessing_start_method}'"
                 f" and using given context with '{mp_ctx.get_start_method()}'"
