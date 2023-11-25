@@ -47,11 +47,8 @@ def train_probe(data_folder, model_save_path, input_size):
             optimizer.step()
 
             # Print statistics
-            running_loss += loss.item()
-            # if i % 10 == 9:    # print every 10 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}')
-            running_loss = 0.0
-
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item() / 10:.3f}')
+            
     # Save the trained model
     torch.save(probe.state_dict(), model_save_path)
     print('Finished Training. Model saved to', model_save_path)
