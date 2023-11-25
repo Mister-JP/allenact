@@ -224,7 +224,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
             use_resnet_normalization=True,
             uuid="rgb_lowres",
         ),
-        # GPSCompassSensorRoboThor(), #Remove thi sensor
+        GPSCompassSensorRoboThor(), #Remove thi sensor
     ]
 
     # %%
@@ -265,7 +265,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     OBSERVATIONS = [
         "rgb_resnet",
-        # "target_coordinates_ind",#Remove?
+        "target_coordinates_ind",#Remove?
     ]
 
     # %%
@@ -413,7 +413,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
         return ResnetTensorNavActorCritic(
             action_space=gym.spaces.Discrete(len(PointNavTask.class_action_names())),
             observation_space=kwargs["sensor_preprocessor_graph"].observation_spaces,
-            # goal_sensor_uuid="target_coordinates_ind", #Remove
+            goal_sensor_uuid="target_coordinates_ind", #Remove
             rgb_resnet_preprocessor_uuid="rgb_resnet",
             hidden_size=512,
             goal_dims=32,
