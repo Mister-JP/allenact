@@ -90,8 +90,8 @@ def train_probe(data_folder, model_save_path, input_size):
     plt.tight_layout()
 
     # Save the figures
-    loss_plot_path = os.path.join(data_folder, f'{data_folder}_loss.png')
-    accuracy_plot_path = os.path.join(data_folder, f'{data_folder}_accuracy.png')
+    loss_plot_path = os.path.join(f'20231125_130432_loss.png')
+    accuracy_plot_path = os.path.join(f'20231125_130432_accuracy.png')
     plt.savefig(loss_plot_path)
     plt.savefig(accuracy_plot_path)
 
