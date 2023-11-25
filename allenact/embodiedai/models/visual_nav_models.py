@@ -74,13 +74,13 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         )
         self.mlp_loss_function = nn.MSELoss()  # Mean Squared Error Loss
         self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
-        self.coordinate_mlp.apply(init_weights)
+        # self.coordinate_mlp.apply(self.init_weights)
 
-    # Initialize the weights of coordinate_mlp
-    def init_weights(m):
-        if isinstance(m, nn.Linear):
-            torch.nn.init.xavier_uniform_(m.weight)
-            m.bias.data.fill_(0.01)
+    # # Initialize the weights of coordinate_mlp
+    # def init_weights(m):
+    #     if isinstance(m, nn.Linear):
+    #         torch.nn.init.xavier_uniform_(m.weight)
+    #         m.bias.data.fill_(0.01)
 
     def create_state_encoders(
         self,
