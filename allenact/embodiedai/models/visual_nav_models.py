@@ -79,11 +79,14 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         self.fusion_model: Optional[nn.Module] = None
         self.belief_names: Optional[Sequence[str]] = None
         self.auxiliary_model_class = auxiliary_model_class
-        # Initialize the coordinate prediction MLP
-        self.coordinate_mlp = CoordinatePredictorMLP(hidden_state_size, output_size)
-        
-        # Initialize the loss function and optimizer for the MLP
-        self.mlp_loss_function = nn.MSELoss()
+        self.coordinate_mlp = nn.Sequential(
+            nn.Linear(hidden_size, 128),  # First hidden layer
+            nn.ReLU(),                    # Activation function
+            nn.Linear(128, 64),           # Second hidden layer
+            nn.ReLU(),                    # Activation function
+            nn.Linear(64, 2)              # Output layer for 2D coordinates
+        )
+        self.mlp_loss_function = nn.MSELoss()  # Mean Squared Error Loss
         self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
 
     def create_state_encoders(
