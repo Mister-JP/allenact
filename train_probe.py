@@ -57,7 +57,7 @@ def train_probe(data_folder, model_save_path, input_size):
     print('Finished Training. Model saved to', model_save_path)
 
 # Parameters
-data_folder = 'probe_data/VERSION_FOLDER'  # replace with your actual folder path
+data_folder = 'probe_data/20231125_130432'  # replace with your actual folder path
 model_save_path = os.path.join(data_folder, 'probe_model.pth')
 input_size = 512  # the input size to the MLP probe, as per your architecture
 
