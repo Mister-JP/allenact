@@ -1928,6 +1928,7 @@ class OnPolicyInference(OnPolicyRLEngine):
         )
         self.training_pipeline = self.config.training_pipeline()
 
+        #loads ckeckpoint into actor-critic
         ckpt = self.checkpoint_load(checkpoint_file_path, restart_pipeline=False)
         total_steps = cast(int, ckpt["total_steps"])
 
@@ -1976,7 +1977,8 @@ class OnPolicyInference(OnPolicyRLEngine):
             visualizer=visualizer,
         )
         assert num_paused == 0, f"{num_paused} tasks paused when initializing eval"
-
+        get_logger().info(f"rollout_storage is {rollout_storage}")
+        get_logger().info(f"num_active_samplers is {self.num_active_samplers}")
         if rollout_storage is not None:
             num_tasks = sum(
                 self.vector_tasks.command(

@@ -220,6 +220,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
+        get_logger().info("FORWARD METHOD FROM VISUAL_NAV_MODELS")
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
