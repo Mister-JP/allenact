@@ -243,7 +243,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
-        get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
+        # get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
         target_coordinates = observations['target_coordinates_ind']
         # Training the MLP
         mlp_predictions = {}
@@ -283,8 +283,8 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 self.mlp_optimizer.zero_grad()
                 mlp_loss.backward()
                 self.mlp_optimizer.step()
-                accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
-                print(f"MLP Accuracy: {accuracy}")
+                # accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
+                # print(f"MLP Accuracy: {accuracy}")
             except Exception as e:
                 get_logger().info(f"Error occured {e}")
         try:
