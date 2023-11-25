@@ -215,6 +215,11 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # single belief
         beliefs = all_beliefs.squeeze(-1)  # (T,N,H)
         return beliefs, None
+    
+    def calculate_accuracy(predictions, targets, threshold=0.1):
+        correct_predictions = (torch.abs(predictions - targets) < threshold).all(dim=-1)
+        accuracy = correct_predictions.float().mean().item()
+        return accuracy
 
     def forward(  # type:ignore
         self,
@@ -239,6 +244,10 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
         get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
+        target_coordinates = observations['target_coordinates_ind']
+        # Training the MLP
+        mlp_predictions = {}
+        mlp_loss_sum = 0
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
@@ -264,6 +273,23 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 joint_embeds, memory.tensor(key), masks
             )
             memory.set_tensor(key, rnn_hidden_states)  # update memory here
+
+            hidden_states = memory.tensor(key).detach()  # Detach to avoid affecting actor-critic gradients
+            mlp_predictions[key] = self.coordinate_mlp(hidden_states)
+            # Compute the loss for the current set of predictions
+            mlp_loss = self.mlp_loss_function(mlp_predictions[key], target_coordinates)
+            mlp_loss_sum += mlp_loss
+            # Perform backpropagation and optimization
+            self.mlp_optimizer.zero_grad()
+            mlp_loss.backward()
+            self.mlp_optimizer.step()
+        # Calculate and print the average loss across all keys
+        mlp_average_loss = mlp_loss_sum / len(self.state_encoders)
+        print(f"MLP Average Loss: {mlp_average_loss.item()}")
+        accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
+        print(f"MLP Accuracy: {accuracy}")
+
+
 
         # 3. fuse beliefs for multiple belief models
         beliefs, task_weights = self.fuse_beliefs(
