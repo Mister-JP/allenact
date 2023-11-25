@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import os
+import matplotlib.pyplot as plt
 
 class CoordinateMLP(nn.Module):
     def __init__(self, input_size, hidden_size=128):
