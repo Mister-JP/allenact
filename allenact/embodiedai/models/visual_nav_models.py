@@ -79,6 +79,12 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         self.fusion_model: Optional[nn.Module] = None
         self.belief_names: Optional[Sequence[str]] = None
         self.auxiliary_model_class = auxiliary_model_class
+        # Initialize the coordinate prediction MLP
+        self.coordinate_mlp = CoordinatePredictorMLP(hidden_state_size, output_size)
+        
+        # Initialize the loss function and optimizer for the MLP
+        self.mlp_loss_function = nn.MSELoss()
+        self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
 
     def create_state_encoders(
         self,
@@ -236,7 +242,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
-        get_logger().info(f"FORWARD METHOD obs: {observations}")
+        get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
