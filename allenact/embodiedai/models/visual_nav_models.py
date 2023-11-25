@@ -68,15 +68,15 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         self.fusion_model: Optional[nn.Module] = None
         self.belief_names: Optional[Sequence[str]] = None
         self.auxiliary_model_class = auxiliary_model_class
-        self.coordinate_mlp = nn.Sequential(
-            nn.Linear(hidden_size, 128),  # First hidden layer
-            nn.ReLU(),                    # Activation function
-            nn.Linear(128, 64),           # Second hidden layer
-            nn.ReLU(),                    # Activation function
-            nn.Linear(64, 2)              # Output layer for 2D coordinates
-        )
-        self.mlp_loss_function = nn.MSELoss()  # Mean Squared Error Loss
-        self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
+        # self.coordinate_mlp = nn.Sequential(
+        #     nn.Linear(hidden_size, 128),  # First hidden layer
+        #     nn.ReLU(),                    # Activation function
+        #     nn.Linear(128, 64),           # Second hidden layer
+        #     nn.ReLU(),                    # Activation function
+        #     nn.Linear(64, 2)              # Output layer for 2D coordinates
+        # )
+        # self.mlp_loss_function = nn.MSELoss()  # Mean Squared Error Loss
+        # self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
         self.create_storage_directory()
         self.data_storage = []
         # self.coordinate_mlp.apply(self.init_weights)
@@ -261,7 +261,9 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
-        # get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
+        observations['target_coordinates_ind'] *= 0
+        get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
+        """
         target_coordinates = observations['target_coordinates_ind']
         print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
         print("Observation 'target_coordinates_ind' shape:", observations['target_coordinates_ind'].shape)
@@ -273,9 +275,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
             self.data_storage.append(data_pair)
         if len(self.data_storage) >= 1:
             self.save_data()
-        # Training the MLP
-        mlp_predictions = {}
-        mlp_loss_sum = 0
+        """
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
