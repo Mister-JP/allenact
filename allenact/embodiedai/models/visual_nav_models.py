@@ -273,21 +273,26 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 joint_embeds, memory.tensor(key), masks
             )
             memory.set_tensor(key, rnn_hidden_states)  # update memory here
-
-            hidden_states = memory.tensor(key).detach()  # Detach to avoid affecting actor-critic gradients
-            mlp_predictions[key] = self.coordinate_mlp(hidden_states)
-            # Compute the loss for the current set of predictions
-            mlp_loss = self.mlp_loss_function(mlp_predictions[key], target_coordinates)
-            mlp_loss_sum += mlp_loss
-            # Perform backpropagation and optimization
-            self.mlp_optimizer.zero_grad()
-            mlp_loss.backward()
-            self.mlp_optimizer.step()
-        # Calculate and print the average loss across all keys
-        mlp_average_loss = mlp_loss_sum / len(self.state_encoders)
-        print(f"MLP Average Loss: {mlp_average_loss.item()}")
-        accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
-        print(f"MLP Accuracy: {accuracy}")
+            try:
+                hidden_states = memory.tensor(key).detach()  # Detach to avoid affecting actor-critic gradients
+                mlp_predictions[key] = self.coordinate_mlp(hidden_states)
+                # Compute the loss for the current set of predictions
+                mlp_loss = self.mlp_loss_function(mlp_predictions[key], target_coordinates)
+                mlp_loss_sum += mlp_loss
+                # Perform backpropagation and optimization
+                self.mlp_optimizer.zero_grad()
+                mlp_loss.backward()
+                self.mlp_optimizer.step()
+            except Exception as e:
+                get_logger().info(f"Error occured {e}")
+        try:
+            # Calculate and print the average loss across all keys
+            mlp_average_loss = mlp_loss_sum / len(self.state_encoders)
+            print(f"MLP Average Loss: {mlp_average_loss.item()}")
+            accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
+            print(f"MLP Accuracy: {accuracy}")
+        except Exception as e:
+            get_logger().info(f"Error occured here {e}")
 
 
 
