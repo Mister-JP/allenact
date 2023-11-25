@@ -90,7 +90,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     def create_storage_directory(self):
         # Create a new directory with the current date and time
         current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-        self.storage_path = os.path.join(self.save_dir, current_time)
+        self.storage_path = os.path.join('probe_data', current_time)
         os.makedirs(self.storage_path, exist_ok=True)
         self.data_file_path = os.path.join(self.storage_path, 'inference_data.pt')
 
