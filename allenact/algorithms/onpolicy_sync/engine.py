@@ -2055,6 +2055,7 @@ class OnPolicyInference(OnPolicyRLEngine):
             if self.num_active_samplers == 0 or steps % rollout_steps == 0:
                 if should_compute_onpolicy_losses and self.num_active_samplers > 0:
                     with torch.no_grad():
+                        #_ is the memory having hidden state of the actor_critic model
                         actor_critic_output, _ = self.actor_critic(
                             **rollout_storage.agent_input_for_next_step()
                         )

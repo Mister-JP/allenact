@@ -185,6 +185,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         }
 
     def forward_encoder(self, observations: ObservationType) -> torch.FloatTensor:
+        get_logger().info(f"Not implemented error in forward_encorder")
         raise NotImplementedError("Obs Encoder Not Implemented")
 
     def fuse_beliefs(
@@ -220,7 +221,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
-        get_logger().info("FORWARD METHOD FROM VISUAL_NAV_MODELS")
+        get_logger().info(f"FORWARD METHOD obs: {observations}")
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
