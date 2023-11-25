@@ -92,7 +92,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.storage_path = os.path.join('probe_data', current_time)
         os.makedirs(self.storage_path, exist_ok=True)
-        self.data_file_path = os.path.join(self.storage_path, 'inference_data_probe.pt')
+        self.data_file_path = os.path.join(self.storage_path, 'inference_data.pt')
 
     def save_data(self):
         # Save the collected data to the file
