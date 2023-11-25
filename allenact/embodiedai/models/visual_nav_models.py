@@ -283,14 +283,15 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 self.mlp_optimizer.zero_grad()
                 mlp_loss.backward()
                 self.mlp_optimizer.step()
+                accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
+                print(f"MLP Accuracy: {accuracy}")
             except Exception as e:
                 get_logger().info(f"Error occured {e}")
         try:
             # Calculate and print the average loss across all keys
             mlp_average_loss = mlp_loss_sum / len(self.state_encoders)
             print(f"MLP Average Loss: {mlp_average_loss.item()}")
-            accuracy = self.calculate_accuracy(mlp_predictions[key], target_coordinates, threshold=0.1)
-            print(f"MLP Accuracy: {accuracy}")
+            
         except Exception as e:
             get_logger().info(f"Error occured here {e}")
 
