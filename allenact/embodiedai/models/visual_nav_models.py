@@ -2,6 +2,7 @@ from collections import OrderedDict
 from typing import Tuple, Dict, Optional, List, Sequence
 from typing import TypeVar
 
+import os
 import gym
 import torch
 import torch.nn as nn
@@ -74,6 +75,8 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         )
         self.mlp_loss_function = nn.MSELoss()  # Mean Squared Error Loss
         self.mlp_optimizer = optim.Adam(self.coordinate_mlp.parameters(), lr=0.001)
+        self.create_storage_directory()
+        self.data_storage = []
         # self.coordinate_mlp.apply(self.init_weights)
 
     # # Initialize the weights of coordinate_mlp
@@ -81,6 +84,19 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     #     if isinstance(m, nn.Linear):
     #         torch.nn.init.xavier_uniform_(m.weight)
     #         m.bias.data.fill_(0.01)
+
+    def create_storage_directory(self):
+        # Create a new directory with the current date and time
+        current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+        self.storage_path = os.path.join(self.save_dir, current_time)
+        os.makedirs(self.storage_path, exist_ok=True)
+        self.data_file_path = os.path.join(self.storage_path, 'inference_data.pt')
+
+    def save_data(self):
+        # Save the collected data to the file
+        torch.save(self.data_storage, self.data_file_path)
+        # Clear the storage to avoid duplicate entries in case of multiple saves
+        self.data_storage = []
 
     def create_state_encoders(
         self,
@@ -247,6 +263,14 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         target_coordinates = observations['target_coordinates_ind']
         print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
         print("Observation 'target_coordinates_ind' shape:", observations['target_coordinates_ind'].shape)
+        if 'target_coordinates_ind' in observations:
+            data_pair = {
+                'memory_tensor': memory.tensor(list(self.state_encoders.keys())[0]).detach().cpu(),
+                'target_coordinates_ind': observations['target_coordinates_ind'].detach().cpu()
+            }
+            self.data_storage.append(data_pair)
+        if len(self.data_storage) >= 1:
+            self.save_data()
         # Training the MLP
         mlp_predictions = {}
         mlp_loss_sum = 0
