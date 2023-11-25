@@ -5,6 +5,7 @@ from typing import TypeVar
 import gym
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from gym.spaces.dict import Dict as SpaceDict
 
 from allenact.algorithms.onpolicy_sync.policy import (
@@ -25,6 +26,20 @@ from allenact.utils.system import get_logger
 
 FusionType = TypeVar("FusionType", bound=Fusion)
 
+
+class CoordinatePredictorMLP(nn.Module):
+    def __init__(self, input_size, output_size):
+        super().__init__()
+        self.fc_layers = nn.Sequential(
+            nn.Linear(input_size, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, output_size)  # Assuming 2D coordinates
+        )
+
+    def forward(self, x):
+        return self.fc_layers(x)
 
 class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     """Base class of visual navigation / manipulation (or broadly, embodied AI)
@@ -221,7 +236,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # Returns
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
-        get_logger().info(f"FORWARD METHOD obs: {observations.size()}")
+        get_logger().info(f"FORWARD METHOD obs: {observations}")
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
