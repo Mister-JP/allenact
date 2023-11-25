@@ -90,8 +90,8 @@ def train_probe(data_folder, model_save_path, input_size):
     plt.tight_layout()
 
     # Save the figures
-    loss_plot_path = os.path.join(f'20231125_130432_loss.png')
-    accuracy_plot_path = os.path.join(f'20231125_130432_accuracy.png')
+    loss_plot_path = os.path.join(data_folder, f'{VERSION}_loss.png')
+    accuracy_plot_path = os.path.join(data_folder, f'{VERSION}_accuracy.png')
     plt.savefig(loss_plot_path)
     plt.savefig(accuracy_plot_path)
 
@@ -102,7 +102,8 @@ def train_probe(data_folder, model_save_path, input_size):
     print('Finished Training. Model saved to', model_save_path)
 
 # Parameters
-data_folder = 'probe_data/20231125_130432'  # replace with your actual folder path
+VERSION = '20231125_130432'
+data_folder = f'probe_data/{VERSION}'  # replace with your actual folder path
 model_save_path = os.path.join(data_folder, 'probe_model.pth')
 input_size = 512  # the input size to the MLP probe, as per your architecture
 
