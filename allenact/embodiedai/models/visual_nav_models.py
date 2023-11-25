@@ -262,7 +262,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
         observations['target_coordinates_ind'] *= 0
-        get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
+        # get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind']}")
         """
         target_coordinates = observations['target_coordinates_ind']
         print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
