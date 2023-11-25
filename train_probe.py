@@ -48,9 +48,9 @@ def train_probe(data_folder, model_save_path, input_size):
 
             # Print statistics
             running_loss += loss.item()
-            if i % 10 == 9:    # print every 10 mini-batches
-                print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}')
-                running_loss = 0.0
+            # if i % 10 == 9:    # print every 10 mini-batches
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 10:.3f}')
+            running_loss = 0.0
 
     # Save the trained model
     torch.save(probe.state_dict(), model_save_path)
