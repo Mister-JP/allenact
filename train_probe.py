@@ -19,6 +19,13 @@ class CoordinateMLP(nn.Module):
         x = self.fc3(x)
         return x
 
+def calculate_accuracy(predictions, targets, threshold=0.1):
+    # Compute the L2 distance between predictions and targets
+    l2_distances = torch.norm(predictions - targets, dim=1)
+    # Compute accuracy as the percentage of distances below the threshold
+    accuracy = torch.mean((l2_distances < threshold).float()).item()
+    return accuracy
+
 def train_probe(data_folder, model_save_path, input_size):
     # Load the data
     data_file = os.path.join(data_folder, 'inference_data.pt')
@@ -28,6 +35,9 @@ def train_probe(data_folder, model_save_path, input_size):
     probe = CoordinateMLP(input_size)
     criterion = nn.MSELoss()
     optimizer = optim.Adam(probe.parameters(), lr=0.001)
+
+    loss_history = []
+    accuracy_history = []
 
     # Training loop
     for epoch in range(100):  # number of epochs can be adjusted
@@ -47,7 +57,44 @@ def train_probe(data_folder, model_save_path, input_size):
             optimizer.step()
 
             # Print statistics
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item() / 10:.3f}')
+            # Compute accuracy
+            accuracy = calculate_accuracy(outputs, target_coordinates)
+            accuracy_history.append(accuracy)
+
+            # Print statistics
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item():.3f}, accuracy: {accuracy:.3f}')
+            running_loss += loss.item()
+
+        loss_history.append(running_loss / len(data))
+            # print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item() / 10:.3f}')
+    # Plotting and saving the graphs
+    plt.figure(figsize=(12, 6))
+
+    # Plot loss
+    plt.subplot(1, 2, 1)
+    plt.plot(loss_history, label='Loss')
+    plt.title('Training Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    # Plot accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(accuracy_history, label='Accuracy', color='orange')
+    plt.title('Training Accuracy')
+    plt.xlabel('Iteration')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    plt.tight_layout()
+
+    # Save the figures
+    loss_plot_path = os.path.join(data_folder, f'{data_folder}_loss.png')
+    accuracy_plot_path = os.path.join(data_folder, f'{data_folder}_accuracy.png')
+    plt.savefig(loss_plot_path)
+    plt.savefig(accuracy_plot_path)
+
+    print('Loss and accuracy plots saved.')
             
     # Save the trained model
     torch.save(probe.state_dict(), model_save_path)
