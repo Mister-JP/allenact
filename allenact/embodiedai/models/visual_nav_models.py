@@ -27,20 +27,6 @@ from allenact.utils.system import get_logger
 FusionType = TypeVar("FusionType", bound=Fusion)
 
 
-class CoordinatePredictorMLP(nn.Module):
-    def __init__(self, input_size, output_size):
-        super().__init__()
-        self.fc_layers = nn.Sequential(
-            nn.Linear(input_size, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, output_size)  # Assuming 2D coordinates
-        )
-
-    def forward(self, x):
-        return self.fc_layers(x)
-
 class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     """Base class of visual navigation / manipulation (or broadly, embodied AI)
     model.
