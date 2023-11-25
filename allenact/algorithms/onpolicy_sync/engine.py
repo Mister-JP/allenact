@@ -403,7 +403,7 @@ class OnPolicyRLEngine(object):
             Dict[str, Union[Dict[str, Any], torch.Tensor, float, int, str, List]], ckpt,
         )
 
-        self.actor_critic.load_state_dict(ckpt["model_state_dict"])  # type:ignore
+        self.actor_critic.load_state_dict(ckpt["model_state_dict"], strict=False)  # type:ignore
 
         if "training_pipeline_state_dict" in ckpt and not restart_pipeline:
             self.training_pipeline.load_state_dict(
