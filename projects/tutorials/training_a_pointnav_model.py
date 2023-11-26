@@ -193,7 +193,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     ADVANCE_SCENE_ROLLOUT_PERIOD: Optional[int] = None
     NUM_PROCESSES = 60 #Increase to ~60
-    TRAINING_GPUS: Sequence[int] = [4,5,6]
+    TRAINING_GPUS: Sequence[int] = [4,5,7]
     VALIDATION_GPUS: Sequence[int] = [4]
     TESTING_GPUS: Sequence[int] = [4]
 
@@ -310,7 +310,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def training_pipeline(cls, **kwargs):
-        ppo_steps = int(10000000)
+        ppo_steps = int(20000000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 3
