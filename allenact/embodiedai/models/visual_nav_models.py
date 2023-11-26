@@ -279,7 +279,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
-        get_logger().info(f"FORWARD METHOD obs: {obs_embeds}")
+        # get_logger().info(f"FORWARD METHOD obs: {obs_embeds}")
 
         # 1.2 use embedding model to get prev_action embeddings
         if self.prev_action_embedder.input_size == self.action_space.n + 1:
