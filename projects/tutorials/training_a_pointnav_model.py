@@ -204,7 +204,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     """
 
     # %%
-    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/train")#change to train
+    TRAIN_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/train3")#change to train
     # VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/val")#changed for inference
     VAL_DATASET_DIR = os.path.join(os.getcwd(), "datasets/robothor-pointnav/debug")#changed for inference
 
@@ -310,7 +310,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def training_pipeline(cls, **kwargs):
-        ppo_steps = int(20000000)
+        ppo_steps = int(5000000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 3
