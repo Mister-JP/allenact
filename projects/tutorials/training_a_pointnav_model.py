@@ -295,7 +295,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def tag(cls):
-        return "PointNavRobothorRGBPPO_semiFull_blind"
+        return "PointNavRobothorRGBPPO_smallerDataset_blind"
 
     # %%
     """
@@ -310,7 +310,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def training_pipeline(cls, **kwargs):
-        ppo_steps = int(5000000)
+        ppo_steps = int(10000000)
         lr = 3e-4
         num_mini_batch = 1
         update_repeats = 3
