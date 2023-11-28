@@ -214,6 +214,7 @@ class GPSCompassSensorRoboThor2(Sensor[RoboThorEnvironment, PointNavTask]):
         source_rotation: np.quaternion,
         goal_position: np.ndarray,
     ):
+        print(goal_position)
         print(f"computing_pointgoal from goal and source: {goal_position.shape()}")
         direction_vector = goal_position - source_position
         direction_vector_agent = GPSCompassSensorRoboThor.quaternion_rotate_vector(
