@@ -264,7 +264,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         Tuple of the `ActorCriticOutput` and recurrent hidden state.
         """
         # observations['target_coordinates_ind'] *= 0
-        temp = observations['target_coordinates_ind2'][..., -2:]
+        temp = observations['target_coordinates_ind2'][..., -2:].clone()
         observations['target_coordinates_ind2'][..., -2:] *= 0
         get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind2']} and temp = {temp}")
         """
