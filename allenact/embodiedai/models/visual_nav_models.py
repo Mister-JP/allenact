@@ -49,7 +49,9 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         auxiliary_uuids: Optional[List[str]] = None,
         auxiliary_model_class=AuxiliaryModel,
     ):
+        print("init visualNavAC")
         super().__init__(action_space=action_space, observation_space=observation_space)
+        # print("init visualNavAC")
         self._hidden_size = hidden_size
         assert multiple_beliefs == (beliefs_fusion is not None)
         self.multiple_beliefs = multiple_beliefs
