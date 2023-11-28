@@ -205,7 +205,7 @@ class GPSCompassSensorRoboThor2(Sensor[RoboThorEnvironment, PointNavTask]):
         return gym.spaces.Box(
             low=np.finfo(np.float32).min,
             high=np.finfo(np.float32).max,
-            shape=(2,),
+            shape=(4,),
             dtype=np.float32,
         )
 
@@ -218,7 +218,7 @@ class GPSCompassSensorRoboThor2(Sensor[RoboThorEnvironment, PointNavTask]):
         # print(source_position)
         # print(source_rotation)
         # print("computing_pointgoal from goal and source!")
-        direction_vector = goal_position - source_position
+        direction_vector = source_position
         direction_vector_agent = GPSCompassSensorRoboThor.quaternion_rotate_vector(
             source_rotation.inverse(), direction_vector
         )
@@ -227,7 +227,7 @@ class GPSCompassSensorRoboThor2(Sensor[RoboThorEnvironment, PointNavTask]):
             direction_vector_agent[2], -direction_vector_agent[0]
         )
         # return np.array([rho, phi], dtype=np.float32)
-        return np.array([goal_position[0], goal_position[2]], dtype=np.float32)
+        return np.array([goal_position[0], goal_position[2], rho, phi], dtype=np.float32)
 
     @staticmethod
     def quaternion_from_y_angle(angle: float) -> np.quaternion:

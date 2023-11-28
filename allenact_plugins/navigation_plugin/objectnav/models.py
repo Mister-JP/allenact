@@ -204,7 +204,7 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
         # base params
         self,
         action_space: gym.spaces.Discrete,
-        observation_space,
+        observation_space: SpaceDict,
         goal_sensor_uuid: str,
         hidden_size=512,
         num_rnn_layers=1,
@@ -223,7 +223,7 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
         combiner_hidden_out_dims: Tuple[int, int] = (128, 32),
         **kwargs,
     ):
-        get_logger().info("ResnetTensorNavActorCritic initiated")
+        # get_logger().info("ResnetTensorNavActorCritic initiated")
         super().__init__(
             action_space=action_space,
             observation_space=observation_space,
