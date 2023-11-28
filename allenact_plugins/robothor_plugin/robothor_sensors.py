@@ -309,7 +309,7 @@ class GPSCompassSensorRoboThor4(Sensor[RoboThorEnvironment, PointNavTask]):
     ):
         # print(goal_position)
         print("computing_pointgoal from goal and source!")
-        direction_vector = goal_position - source_position
+        direction_vector = source_position
         direction_vector_agent = GPSCompassSensorRoboThor.quaternion_rotate_vector(
             source_rotation.inverse(), direction_vector
         )
@@ -317,8 +317,8 @@ class GPSCompassSensorRoboThor4(Sensor[RoboThorEnvironment, PointNavTask]):
         rho, phi = GPSCompassSensorRoboThor.cartesian_to_polar(
             direction_vector_agent[2], -direction_vector_agent[0]
         )
-        # return np.array([rho, phi], dtype=np.float32)
-        return np.array([goal_position[0], goal_position[2]], dtype=np.float32)
+        return np.array([rho, phi], dtype=np.float32)
+        # return np.array([goal_position[0], goal_position[2]], dtype=np.float32)
 
     @staticmethod
     def quaternion_from_y_angle(angle: float) -> np.quaternion:
