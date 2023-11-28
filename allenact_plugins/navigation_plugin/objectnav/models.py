@@ -204,7 +204,7 @@ class ResnetTensorNavActorCritic(VisualNavActorCritic):
         # base params
         self,
         action_space: gym.spaces.Discrete,
-        observation_space: SpaceDict,
+        observation_space,
         goal_sensor_uuid: str,
         hidden_size=512,
         num_rnn_layers=1,

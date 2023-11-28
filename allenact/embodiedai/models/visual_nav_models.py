@@ -42,7 +42,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     def __init__(
         self,
         action_space: gym.spaces.Discrete,
-        observation_space,
+        observation_space: SpaceDict,
         hidden_size=512,
         multiple_beliefs=False,
         beliefs_fusion: Optional[FusionType] = None,
