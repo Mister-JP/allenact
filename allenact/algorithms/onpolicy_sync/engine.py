@@ -480,6 +480,7 @@ class OnPolicyRLEngine(object):
             and any(isinstance(s, RolloutStorage) for s in storage_to_initialize)
         ):
             # No rollout storage, thus we are not
+            print("initialize storage and viz")
             observations = self.vector_tasks.get_observations()
 
             npaused, keep, batch = self.remove_paused(observations)
