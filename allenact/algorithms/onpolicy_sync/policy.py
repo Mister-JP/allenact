@@ -45,7 +45,9 @@ class ActorCriticModel(Generic[DistributionType], nn.Module):
         action_space : The space of actions available to the agent.
         observation_space: The observation space expected by the agent.
         """
+        print("acmodel init")
         super().__init__()
+
         self.action_space = action_space
         self.observation_space = observation_space
         self.memory_spec: Optional[List[Optional[FullMemorySpecType]]] = None
