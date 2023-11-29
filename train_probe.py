@@ -40,6 +40,7 @@ def train_probe(data_folder, model_save_path, input_size):
     split_index = int(0.8 * len(data))
     train_data = data[:split_index]
     print(len(train_data))
+    print(len(data))
     test_data = data[split_index:]
 
 
