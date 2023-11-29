@@ -277,7 +277,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
             data_pair = {
                 'memory_tensor': memory.tensor(list(self.state_encoders.keys())[0]).detach().cpu(),
                 # 'target_coordinates_ind': observations['target_coordinates_ind'].detach().cpu()
-                'target_coordinates_ind': temp
+                'target_coordinates_ind': temp.detach().cpu()
             }
             self.data_storage.append(data_pair)
         if len(self.data_storage) >= 1:
