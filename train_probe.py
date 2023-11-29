@@ -78,7 +78,8 @@ def train_probe(data_folder, model_save_path, input_size):
             print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item():.3f}, accuracy: {accuracy:.3f}')
             running_loss += loss.item()
 
-        loss_history.append(running_loss / len(data))
+        avg_train_loss = running_loss / len(train_data)
+        loss_history.append(avg_train_loss)
         # Evaluate on the testing set
         probe.eval()  # Set the model to evaluation mode
         with torch.no_grad():  # Disable gradient calculation
