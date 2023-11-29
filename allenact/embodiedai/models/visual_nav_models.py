@@ -280,7 +280,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 'target_coordinates_ind': temp.detach().cpu()
             }
             self.data_storage.append(data_pair)
-        if len(self.data_storage) >= 100:
+        if len(self.data_storage) >= 1:
             self.save_data()
         
 
