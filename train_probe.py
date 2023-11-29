@@ -57,6 +57,7 @@ def train_probe(data_folder, model_save_path, input_size):
     # Training loop
     for epoch in range(100):  # number of epochs can be adjusted
         running_loss = 0.0
+        running_acc = 0.0
         for i, data_pair in enumerate(train_data):
             # Zero the parameter gradients
             optimizer.zero_grad()
@@ -74,6 +75,7 @@ def train_probe(data_folder, model_save_path, input_size):
             # Print statistics
             # Compute accuracy
             accuracy = calculate_accuracy(outputs, target_coordinates)
+            running_acc += accuracy
             accuracy_history.append(accuracy)
 
             # Print statistics
@@ -82,7 +84,7 @@ def train_probe(data_folder, model_save_path, input_size):
 
         avg_train_loss = running_loss / len(train_data)
         loss_history.append(avg_train_loss)
-        avg_train_accuracy = sum(accuracy_history) / len(test_data)
+        avg_train_accuracy = running_acc / len(test_data)
         # Evaluate on the testing set
         probe.eval()  # Set the model to evaluation mode
         with torch.no_grad():  # Disable gradient calculation
