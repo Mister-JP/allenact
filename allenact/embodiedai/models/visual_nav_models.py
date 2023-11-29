@@ -99,7 +99,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
     def save_data(self):
         # Save the collected data to the file
         torch.save(self.data_storage, self.data_file_path)
-        print("Saved data in the file")
+        # print("Saved data in the file")
         # Clear the storage to avoid duplicate entries in case of multiple saves
         self.data_storage = []
 
@@ -273,7 +273,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         target_coordinates = temp
         # print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
         # print("Observation 'target_coordinates_ind' shape:", observations['target_coordinates_ind'].shape)
-        if 'target_coordinates_ind' in observations:
+        if 'target_coordinates_ind2' in observations:
             data_pair = {
                 'memory_tensor': memory.tensor(list(self.state_encoders.keys())[0]).detach().cpu(),
                 # 'target_coordinates_ind': observations['target_coordinates_ind'].detach().cpu()
