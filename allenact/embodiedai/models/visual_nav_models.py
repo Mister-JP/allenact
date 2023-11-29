@@ -101,7 +101,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         torch.save(self.data_storage, self.data_file_path)
         # print("Saved data in the file")
         # Clear the storage to avoid duplicate entries in case of multiple saves
-        self.data_storage = []
+        # self.data_storage = []
 
     def create_state_encoders(
         self,
@@ -280,7 +280,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
                 'target_coordinates_ind': temp.detach().cpu()
             }
             self.data_storage.append(data_pair)
-        if len(self.data_storage) >= 1:
+        if len(self.data_storage) >= 100:
             self.save_data()
         
 
