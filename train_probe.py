@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import os
 import matplotlib.pyplot as plt
+import random
 
 class CoordinateMLP(nn.Module):
     def __init__(self, input_size, hidden_size=128):
@@ -34,6 +35,13 @@ def train_probe(data_folder, model_save_path, input_size):
     data_file = os.path.join(data_folder, 'inference_data.pt')
     data = torch.load(data_file)
 
+    # Split the data into training and testing sets (80-20 split)
+    random.shuffle(data)
+    split_index = int(0.8 * len(data))
+    train_data = data[:split_index]
+    test_data = data[split_index:]
+
+
     # Initialize the probe model
     probe = CoordinateMLP(input_size)
     criterion = nn.MSELoss()
@@ -41,11 +49,13 @@ def train_probe(data_folder, model_save_path, input_size):
 
     loss_history = []
     accuracy_history = []
+    test_loss_history = []
+    test_accuracy_history = []
 
     # Training loop
     for epoch in range(100):  # number of epochs can be adjusted
         running_loss = 0.0
-        for i, data_pair in enumerate(data):
+        for i, data_pair in enumerate(train_data):
             # Zero the parameter gradients
             optimizer.zero_grad()
 
@@ -69,6 +79,27 @@ def train_probe(data_folder, model_save_path, input_size):
             running_loss += loss.item()
 
         loss_history.append(running_loss / len(data))
+        # Evaluate on the testing set
+        probe.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # Disable gradient calculation
+            running_test_loss = 0.0
+            total_test_accuracy = 0.0
+            for i, data_pair in enumerate(test_data):
+                inputs = data_pair['memory_tensor']
+                target_coordinates = data_pair['target_coordinates_ind']
+                outputs = probe(inputs)
+                test_loss = criterion(outputs, target_coordinates)
+                running_test_loss += test_loss.item()
+                test_accuracy = calculate_accuracy(outputs, target_coordinates)
+                total_test_accuracy += test_accuracy
+
+            avg_test_loss = running_test_loss / len(test_data)
+            avg_test_accuracy = total_test_accuracy / len(test_data)
+            test_loss_history.append(avg_test_loss)
+            test_accuracy_history.append(avg_test_accuracy)
+
+        # Print training and testing statistics
+        print(f'Epoch {epoch + 1}: Train Loss: {avg_train_loss:.3f}, Train Accuracy: {accuracy:.3f}, Test Loss: {avg_test_loss:.3f}, Test Accuracy: {avg_test_accuracy:.3f}')
             # print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item() / 10:.3f}')
     # Plotting and saving the graphs
     plt.figure(figsize=(12, 6))
