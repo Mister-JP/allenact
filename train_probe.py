@@ -1,3 +1,5 @@
+import argparse
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -101,8 +103,13 @@ def train_probe(data_folder, model_save_path, input_size):
     torch.save(probe.state_dict(), model_save_path)
     print('Finished Training. Model saved to', model_save_path)
 
+# Argument parsing
+parser = argparse.ArgumentParser(description='Train CoordinateMLP Probe')
+parser.add_argument('VERSION', type=str, help='Version string for the run')
+args = parser.parse_args()
+
 # Parameters
-VERSION = '20231129_135355'
+VERSION = args.VERSION
 data_folder = f'probe_data/{VERSION}'  # replace with your actual folder path
 model_save_path = os.path.join(data_folder, 'probe_model.pth')
 input_size = 512  # the input size to the MLP probe, as per your architecture
