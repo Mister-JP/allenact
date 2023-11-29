@@ -82,6 +82,7 @@ def train_probe(data_folder, model_save_path, input_size):
 
         avg_train_loss = running_loss / len(train_data)
         loss_history.append(avg_train_loss)
+        avg_train_accuracy = sum(accuracy_history) / len(test_data)
         # Evaluate on the testing set
         probe.eval()  # Set the model to evaluation mode
         with torch.no_grad():  # Disable gradient calculation
@@ -102,7 +103,7 @@ def train_probe(data_folder, model_save_path, input_size):
             test_accuracy_history.append(avg_test_accuracy)
 
         # Print training and testing statistics
-        print(f'Epoch {epoch + 1}: Train Loss: {avg_train_loss:.3f}, Train Accuracy: {accuracy:.3f}, Test Loss: {avg_test_loss:.3f}, Test Accuracy: {avg_test_accuracy:.3f}')
+        print(f'Epoch {epoch + 1}: Train Loss: {avg_train_loss:.3f}, Train Accuracy: {avg_train_accuracy:.3f}, Test Loss: {avg_test_loss:.3f}, Test Accuracy: {avg_test_accuracy:.3f}')
             # print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item() / 10:.3f}')
     # Plotting and saving the graphs
     plt.figure(figsize=(12, 6))
