@@ -77,7 +77,7 @@ def train_probe(data_folder, model_save_path, input_size):
             accuracy_history.append(accuracy)
 
             # Print statistics
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item():.3f}, accuracy: {accuracy:.3f}')
+            # print(f'[{epoch + 1}, {i + 1:5d}] loss: {loss.item():.3f}, accuracy: {accuracy:.3f}')
             running_loss += loss.item()
 
         avg_train_loss = running_loss / len(train_data)
