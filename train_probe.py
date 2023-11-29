@@ -55,7 +55,7 @@ def train_probe(data_folder, model_save_path, input_size):
     test_accuracy_history = []
 
     # Training loop
-    for epoch in range(100):  # number of epochs can be adjusted
+    for epoch in range(1000):  # number of epochs can be adjusted
         running_loss = 0.0
         running_acc = 0.0
         for i, data_pair in enumerate(train_data):
