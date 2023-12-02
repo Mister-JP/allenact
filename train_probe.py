@@ -60,6 +60,9 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
     optimizer = optim.Adam(probe.parameters(), lr=learning_rate)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=100, gamma=0.1)  # Adjusts learning rate
 
+    train_losses, valid_losses, test_losses = [], [], []
+    train_accuracies, valid_accuracies, test_accuracies = [], [], []
+
     best_valid_loss = float('inf')
     for epoch in range(epochs):
         probe.train()
@@ -88,6 +91,16 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
                 outputs = probe(inputs)
                 valid_loss += criterion(outputs, target_coordinates).item()
                 valid_acc += calculate_accuracy(outputs, target_coordinates)
+        
+        avg_train_loss = running_loss / len(train_loader)
+        avg_train_acc = running_acc / len(train_loader)
+        avg_valid_loss = valid_loss / len(valid_loader)
+        avg_valid_acc = valid_acc / len(valid_loader)
+
+        train_losses.append(avg_train_loss)
+        valid_losses.append(avg_valid_loss)
+        train_accuracies.append(avg_train_acc)
+        valid_accuracies.append(avg_valid_acc)
 
         # Update learning rate
         scheduler.step()
@@ -113,6 +126,42 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
             outputs = probe(inputs)
             test_loss += criterion(outputs, target_coordinates).item()
             test_acc += calculate_accuracy(outputs, target_coordinates)
+   
+    # Record test metrics
+    avg_test_loss = test_loss / len(test_loader)
+    avg_test_acc = test_acc / len(test_loader)
+    test_losses = [avg_test_loss] * epochs  # Repeat the test loss for each epoch
+    test_accuracies = [avg_test_acc] * epochs  # Repeat the test accuracy for each epoch
+
+    # Plotting
+    plt.figure(figsize=(12, 6))
+
+    # Plot loss
+    plt.subplot(1, 2, 1)
+    plt.plot(train_losses, label='Training Loss', color='blue')
+    plt.plot(valid_losses, label='Validation Loss', color='green')
+    plt.plot(test_losses, label='Test Loss', color='red')
+    plt.title('Loss Over Epochs')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    # Plot accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(train_accuracies, label='Training Accuracy', color='blue')
+    plt.plot(valid_accuracies, label='Validation Accuracy', color='green')
+    plt.plot(test_accuracies, label='Test Accuracy', color='red')
+    plt.title('Accuracy Over Epochs')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    plt.tight_layout()
+
+    # Save the figures
+    plot_path = os.path.join(data_folder, f'{VERSION}_metrics.png')
+    plt.savefig(plot_path)
+    print('Metrics plot saved at', plot_path)
 
     print(f'Test Loss: {test_loss/len(test_loader):.4f}, Test Acc: {test_acc/len(test_loader):.4f}')
 
