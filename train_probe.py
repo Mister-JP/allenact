@@ -50,9 +50,9 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
     train_data, valid_data, test_data = data[:train_size], data[train_size:train_size+valid_size], data[train_size+valid_size:]
 
     # Create data loaders
-    train_loader = data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
-    valid_loader = data.DataLoader(valid_data, batch_size=batch_size)
-    test_loader = data.DataLoader(test_data, batch_size=batch_size)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
+    valid_loader = torch.utils.data.DataLoader(valid_data, batch_size=batch_size)
+    test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size)
 
     # Initialize the probe model
     probe = CoordinateMLP(input_size)
