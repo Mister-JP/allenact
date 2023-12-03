@@ -298,7 +298,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def tag(cls):
-        return "PointNavRobothorRGBPPO_smallerDataset_blind_2_0"
+        return "PointNavRobothorRGBPPO_smallerDataset_onlyTarget"
 
     # %%
     """
