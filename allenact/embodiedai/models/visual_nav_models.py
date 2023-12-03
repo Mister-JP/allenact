@@ -269,12 +269,13 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         observations['target_coordinates_ind2'][..., -2:] *= 0
         observations['rgb_resnet']*= 0
         # get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind2']} and temp = {temp}")
-        get_logger().info(f"FORWARD METHOD obs: {observations}")
+        # get_logger().info(f"FORWARD METHOD obs: {observations}")
         
         # target_coordinates = observations['target_coordinates_ind']
-        target_coordinates = temp
+        # target_coordinates = temp
         # print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
         # print("Observation 'target_coordinates_ind' shape:", observations['target_coordinates_ind'].shape)
+        """
         if 'target_coordinates_ind2' in observations:
             data_pair = {
                 'memory_tensor': memory.tensor(list(self.state_encoders.keys())[0]).detach().cpu(),
@@ -284,7 +285,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
             self.data_storage.append(data_pair)
         if len(self.data_storage) >= 20:
             self.save_data()
-        
+        """
 
         # 1.1 use perception model (i.e. encoder) to get observation embeddings
         obs_embeds = self.forward_encoder(observations)
