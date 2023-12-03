@@ -272,7 +272,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # get_logger().info(f"FORWARD METHOD obs: {observations}")
         
         # target_coordinates = observations['target_coordinates_ind']
-        target_coordinates = temp
+        # target_coordinates = temp
         # print("Memory tensor shape:", memory.tensor(list(self.state_encoders.keys())[0]).shape)
         # print("Observation 'target_coordinates_ind' shape:", observations['target_coordinates_ind'].shape)
         """
