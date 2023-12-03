@@ -527,11 +527,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
         res["loop_dataset"] = True
         res["env_args"] = {}
         res["env_args"].update(self.ENV_ARGS)
-        res["env_args"]["x_display"] = (
-            ("0.%d" % devices[process_ind % len(devices)])
-            if devices is not None and len(devices) > 0
-            else None
-        )
+        res["env_args"]["x_display"] = None
         res["allow_flipping"] = True
         return res
 
