@@ -169,8 +169,8 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
 parser = argparse.ArgumentParser(description='Train CoordinateMLP Probe')
 parser.add_argument('--version', type=str, required=True, help='Version string for the run')
 parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
-parser.add_argument('--epochs', type=int, default=1000, help='Number of epochs for training')
-parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
+parser.add_argument('--epochs', type=int, default=100, help='Number of epochs for training')
+parser.add_argument('--learning_rate', type=float, default=0.0001, help='Learning rate for the optimizer')
 args = parser.parse_args()
 
 # Parameters
