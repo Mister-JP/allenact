@@ -267,7 +267,7 @@ class VisualNavActorCritic(ActorCriticModel[CategoricalDistr]):
         # observations['target_coordinates_ind'] *= 0
         # temp = observations['target_coordinates_ind2'][..., -2:].clone()
         observations['target_coordinates_ind2'][..., -2:] *= 0
-        # observations['rgb_resnet']*= 0
+        observations['rgb_resnet']*= 0
         # get_logger().info(f"FORWARD METHOD obs: {observations['target_coordinates_ind2']} and temp = {temp}")
         # get_logger().info(f"FORWARD METHOD obs: {observations}")
         
