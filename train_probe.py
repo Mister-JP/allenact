@@ -27,7 +27,7 @@ class CoordinateMLP(nn.Module):
         x = self.fc3(x)
         return x
 
-def calculate_accuracy(predictions, targets, threshold=0.5):
+def calculate_accuracy(predictions, targets, threshold=0.25):
     l2_distances = torch.norm(predictions - targets, dim=1)
     accuracy = torch.mean((l2_distances < threshold).float()).item()
     return accuracy
@@ -159,7 +159,7 @@ def train_probe(data_folder, model_save_path, input_size, batch_size=32, epochs=
     plt.tight_layout()
 
     # Save the figures
-    plot_path = os.path.join(data_folder, f'{VERSION}_metrics.png')
+    plot_path = os.path.join(data_folder, f'{VERSION}_metrics_0.25.png')
     plt.savefig(plot_path)
     print('Metrics plot saved at', plot_path)
 
