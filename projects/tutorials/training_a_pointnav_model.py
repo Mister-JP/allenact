@@ -267,8 +267,8 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     OBSERVATIONS = [
         "rgb_resnet",
-        # "target_coordinates_ind2",#Remove?
-        "target_coordinates_ind",#Remove?
+        "target_coordinates_ind2",#Remove?
+        # "target_coordinates_ind",#Remove?
     ]
 
     # %%
