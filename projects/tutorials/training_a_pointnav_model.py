@@ -147,7 +147,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     REWARD_CONFIG = {
         "step_penalty": -0.01,
         "goal_success_reward": 10.0,
-        "failed_stop_reward": 0.0,
+        "failed_stop_reward": -0.5,
         "shaping_weight": 1.0,
     }
 
