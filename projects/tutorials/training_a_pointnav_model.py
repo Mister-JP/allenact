@@ -298,7 +298,7 @@ class PointNavRoboThorRGBPPOExperimentConfig(ExperimentConfig):
     # %%
     @classmethod
     def tag(cls):
-        return "PointNavRobothorRGBPPO_smallerDataset_onlyTarget"
+        return "PointNavRobothorRGBPPO_smallerDataset_noEgoMotion_earlyStopPenalty"
 
     # %%
     """
