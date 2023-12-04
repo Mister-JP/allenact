@@ -27,7 +27,7 @@ class CoordinateMLP(nn.Module):
         x = self.fc3(x)
         return x
 
-def calculate_accuracy(predictions, targets, threshold=0.1):
+def calculate_accuracy(predictions, targets, threshold=0.5):
     l2_distances = torch.norm(predictions - targets, dim=1)
     accuracy = torch.mean((l2_distances < threshold).float()).item()
     return accuracy
