@@ -1,10 +1,29 @@
-<div align="center">
-    <img src="docs/img/AllenAct.svg" width="350" />
-    <br>
-    <i><h3>An open source framework for research in Embodied AI</h3></i>
-    </p>
-    <hr/>
-</div>
+# Instructions to run the code locally:
+
+To install a conda environment with name allenact using this file you can simply run the following :
+```bash
+export MY_ENV_NAME=allenact
+export CONDA_BASE="$(dirname $(dirname "${CONDA_EXE}"))"
+export PIP_SRC="${CONDA_BASE}/envs/${MY_ENV_NAME}/pipsrc"
+conda env create --file ./conda/environment-base.yml --name $MY_ENV_NAME
+```
+
+Activate the environment
+```bash
+conda activate allenact
+```
+Navigate to the main directory by running: `cd allenact`
+
+Download the datasets:
+```bash
+bash datasets/download_navigation_datasets.sh robothor-pointnav
+```
+
+
+
+
+
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Documentation Status](https://img.shields.io/badge/docs-up%20to%20date-Green.svg)](https://allenact.org)
@@ -25,29 +44,6 @@ AllenAct is built and backed by the [Allen Institute for AI (AI2)](https://allen
 - [Tutorials](https://www.allenact.org/tutorials/)
 - [AllenAct Paper](https://arxiv.org/abs/2008.12760)
 - [Citation](#citation)
-
-## Features & Highlights
-
-* _Support for multiple environments_: Support for the [iTHOR](https://ai2thor.allenai.org/ithor/), [RoboTHOR](https://ai2thor.allenai.org/robothor/) and [Habitat](https://aihabitat.org/) embodied environments as well as for grid-worlds including [MiniGrid](https://github.com/maximecb/gym-minigrid).
-* _Task Abstraction_: Tasks and environments are decoupled in AllenAct, enabling researchers to easily implement a large variety of tasks in the same environment.
-* _Algorithms_: Support for a variety of on-policy algorithms including [PPO](https://arxiv.org/pdf/1707.06347.pdf), [DD-PPO](https://arxiv.org/pdf/1911.00357.pdf), [A2C](https://arxiv.org/pdf/1611.05763.pdf), Imitation Learning and [DAgger](https://www.ri.cmu.edu/pub_files/2011/4/Ross-AISTATS11-NoRegret.pdf) as well as offline training such as offline IL.
-* _Sequential Algorithms_: It is trivial to experiment with different sequences of training routines, which are often the key to successful policies.
-* _Simultaneous Losses_: Easily combine various losses while training models (e.g. use an external self-supervised loss while optimizing a PPO loss).
-* _Multi-agent support_: Support for multi-agent algorithms and tasks.
-* _Visualizations_: Out of the box support to easily visualize first and third person views for agents as well as intermediate model tensors, integrated into Tensorboard.
-* _Pre-trained models_: Code and models for a number of standard Embodied AI tasks.
-* _Tutorials_: Start-up code and extensive tutorials to help ramp up to Embodied AI.
-* _First-class PyTorch support_: One of the few RL frameworks to target PyTorch.
-* _Arbitrary action spaces_: Supporting both discrete and continuous actions.
-
-|Environments|Tasks|Algorithms|
-|------------|-----|----------|
-|[iTHOR](https://ai2thor.allenai.org/ithor/), [RoboTHOR](https://ai2thor.allenai.org/robothor/), [Habitat](https://aihabitat.org/), [MiniGrid](https://github.com/maximecb/gym-minigrid), [OpenAI Gym](https://gym.openai.com/)|[PointNav](https://arxiv.org/pdf/1807.06757.pdf), [ObjectNav](https://arxiv.org/pdf/2006.13171.pdf), [MiniGrid tasks](https://github.com/maximecb/gym-minigrid), [Gym Box2D tasks](https://gym.openai.com/envs/#box2d)|[A2C](https://arxiv.org/pdf/1611.05763.pdf), [PPO](https://arxiv.org/pdf/1707.06347.pdf), [DD-PPO](https://arxiv.org/pdf/1911.00357.pdf), [DAgger](https://www.ri.cmu.edu/pub_files/2011/4/Ross-AISTATS11-NoRegret.pdf), Off-policy Imitation|
-
-## Contributions
-We welcome contributions from the greater community. If you would like to make such a contributions we recommend first submitting an [issue](https://github.com/allenai/allenact/issues) describing your proposed improvement. Doing so can ensure we can validate your suggestions before you spend a great deal of time upon them. Improvements and bug fixes should be made via a pull request from your fork of the repository at [https://github.com/allenai/allenact](https://github.com/allenai/allenact).
-
-All code in this repository is subject to formatting, documentation, and type-annotation guidelines. For more details, please see the our [contribution guidelines](CONTRIBUTING.md).
 
 ## Acknowledgments
 This work builds upon the [pytorch-a2c-ppo-acktr](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr-gail) library of Ilya Kostrikov and uses some data structures from FAIR's [habitat-lab](https://github.com/facebookresearch/habitat-lab). We would like to thank Dustin Schwenk for his help for the public release of the framework.
